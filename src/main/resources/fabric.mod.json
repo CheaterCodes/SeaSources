@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "seasources",
+  "version": "${version}",
+
+  "name": "SeaSources",
+  "description": "A mod that allows extracting resources from the ocean.",
+  "authors": [
+    "CheaterCodes"
+  ],
+  "contact": {
+    "sources": "https://github.com/CheaterCodes/SeaSources"
+  },
+
+  "license": "MIT",
+  "icon": "assets/seasources/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.cheatercodes.seasources.SeaSourcesMod"
+    ]
+  },
+  "mixins": [
+    "seasources.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

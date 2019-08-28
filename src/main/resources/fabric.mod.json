@@ -18,7 +18,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.cheatercodes.seasources.SeaSourcesMod"
+      "net.cheatercodes.seasources.SeaSources"
+    ],
+    "client": [
+      "net.cheatercodes.seasources.SeaSourcesClient"
     ]
   },
   "mixins": [

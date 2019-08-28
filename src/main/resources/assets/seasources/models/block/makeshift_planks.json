@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "seasources:block/makeshift_planks_end",
+        "side": "seasources:block/makeshift_planks_side"
+    }
+}

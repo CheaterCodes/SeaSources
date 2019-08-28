@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "seasources:block/makeshift_planks_end",
+    "top":    "seasources:block/makeshift_planks_end",
+    "side":   "seasources:block/makeshift_planks_side"
+  }
+}

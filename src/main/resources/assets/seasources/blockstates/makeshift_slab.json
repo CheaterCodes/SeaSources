@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=x,type=bottom": { "model": "seasources:block/makeshift_horizontal_slab"},
+    "axis=y,type=bottom": { "model": "seasources:block/makeshift_slab"},
+    "axis=z,type=bottom": { "model": "seasources:block/makeshift_horizontal_slab", "y": 90},
+    "axis=x,type=top":    { "model": "seasources:block/makeshift_horizontal_slab", "x": 180},
+    "axis=y,type=top":    { "model": "seasources:block/makeshift_slab", "x": 180},
+    "axis=z,type=top":    { "model": "seasources:block/makeshift_horizontal_slab", "x": 180, "y": 90},
+    "axis=x,type=double": { "model": "seasources:block/makeshift_planks", "x": 90, "y": 90 },
+    "axis=y,type=double": { "model": "seasources:block/makeshift_planks"},
+    "axis=z,type=double": { "model": "seasources:block/makeshift_planks", "x": 90 }
+  }
+}

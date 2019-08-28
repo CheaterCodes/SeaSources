@@ -1,0 +1,7 @@
+{
+  "parent": "seasources:block/horizontal_slab",
+  "textures": {
+    "end": "seasources:block/makeshift_planks_end",
+    "side": "seasources:block/makeshift_planks_side"
+  }
+}

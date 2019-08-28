@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "seasources:block/drying_rack" },
+    "facing=south": { "model": "seasources:block/drying_rack", "y": 180 },
+    "facing=west":  { "model": "seasources:block/drying_rack", "y": 270 },
+    "facing=east":  { "model": "seasources:block/drying_rack", "y": 90 }
+  }
+}

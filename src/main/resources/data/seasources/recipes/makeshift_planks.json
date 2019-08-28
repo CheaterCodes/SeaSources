@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "//",
+    "//"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "seasources:makeshift_planks",
+    "count": 1
+  }
+}

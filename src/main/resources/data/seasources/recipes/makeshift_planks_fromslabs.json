@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "seasources:makeshift_slab"
+    }
+  },
+  "result": {
+    "item": "seasources:makeshift_planks",
+    "count": 1
+  }
+}

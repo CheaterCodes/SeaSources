@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.SoundCategory;
@@ -23,10 +24,9 @@ public class DriftingItemBlockEntity extends BlockEntity implements BlockEntityC
         super(SeaSources.DRIFTING_ITEM_BLOCK_ENTITY);
     }
 
-    public DriftingItemBlockEntity WithItem(ItemStack itemStack)
+    public void SetItem(ItemStack itemStack)
     {
         this.itemStack = itemStack;
-        return this;
     }
 
     @Override

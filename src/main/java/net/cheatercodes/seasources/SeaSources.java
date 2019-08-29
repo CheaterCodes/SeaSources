@@ -6,6 +6,10 @@ import net.cheatercodes.seasources.blockentities.DryingRackBlockEntity;
 import net.cheatercodes.seasources.blocks.DriftingItemBlock;
 import net.cheatercodes.seasources.blocks.DryingRackBlock;
 import net.cheatercodes.seasources.blocks.PillarSlab;
+import net.cheatercodes.seasources.world.DriftingItemsFeature;
+import net.cheatercodes.seasources.world.LevelGeneratorTypeCreator;
+import net.cheatercodes.seasources.world.SeablockBiome;
+import net.cheatercodes.seasources.world.StartingRaftFeature;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -14,6 +18,11 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.LevelGeneratorType;
 
 
 public class SeaSources implements ModInitializer {
@@ -27,6 +36,12 @@ public class SeaSources implements ModInitializer {
 
     public static BlockEntityType<DriftingItemBlockEntity> DRIFTING_ITEM_BLOCK_ENTITY;
 	public static BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY;
+
+	public static LevelGeneratorType SEABLOCK_LEVEL_GENERATOR_TYPE;
+
+	public static Biome SEABLOCK_BIOME;
+	public static Feature STARTING_RAFT_FEATURE;
+	public static Feature DRIFTING_ITEMS_FEATURE;
 
 	@Override
 	public void onInitialize() {
@@ -48,5 +63,15 @@ public class SeaSources implements ModInitializer {
 		//Recipes
 		DryingRecipe.TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(ModId, "drying"), new DryingRecipe.Type());
 		DryingRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(ModId, "drying"), new DryingRecipe.Serializer());
+
+		//World Gen
+		SEABLOCK_LEVEL_GENERATOR_TYPE = LevelGeneratorTypeCreator.create("seablock");
+
+		//Features
+		STARTING_RAFT_FEATURE = Registry.register(Registry.FEATURE, new Identifier(ModId, "starting_raft"), new StartingRaftFeature(DefaultFeatureConfig::deserialize));
+		DRIFTING_ITEMS_FEATURE = Registry.register(Registry.FEATURE, new Identifier(ModId, "drifting_items"), new DriftingItemsFeature(DefaultFeatureConfig::deserialize));
+
+		//Biomes
+		SEABLOCK_BIOME = Registry.register(Registry.BIOME, new Identifier(ModId, "seablock"), new SeablockBiome());
 	}
 }

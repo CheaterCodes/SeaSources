@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "facing=down": { "model": "seasources:block/wooden_hopper" },
+    "facing=north": { "model": "seasources:block/wooden_hopper_side" },
+    "facing=south": { "model": "seasources:block/wooden_hopper_side", "y": 180 },
+    "facing=west": { "model": "seasources:block/wooden_hopper_side", "y": 270 },
+    "facing=east": { "model": "seasources:block/wooden_hopper_side", "y": 90 }
+  }
+}

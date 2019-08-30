@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "seasources:makeshift_planks"
+    }
+  },
+  "result": {
+    "item": "seasources:makeshift_slab",
+    "count": 6
+  }
+}

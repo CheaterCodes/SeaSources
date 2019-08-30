@@ -4,6 +4,7 @@ import net.cheatercodes.seasources.blockentities.DriftingItemBlockEntity;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -65,6 +66,15 @@ public class DriftingItemBlock extends Block implements FluidDrainable, BlockEnt
     @Override
     public BlockEntity createBlockEntity(BlockView blockView) {
         return new DriftingItemBlockEntity();
+    }
+
+    @Override
+    public void onEntityCollision(BlockState blockState_1, World world_1, BlockPos blockPos_1, Entity entity_1) {
+        BlockEntity blockEntity = world_1.getBlockEntity(blockPos_1);
+        if(blockEntity instanceof  DriftingItemBlockEntity)
+        {
+            ((DriftingItemBlockEntity)blockEntity).onEntityCollided(entity_1);
+        }
     }
 
     @Override

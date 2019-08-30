@@ -4,6 +4,7 @@ import net.cheatercodes.seasources.SeaSources;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.Box;
 
 import java.util.List;
 
-public class DriftingItemBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable {
+public class DriftingItemBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
 
     public ItemStack itemStack = ItemStack.EMPTY;
 
@@ -53,21 +54,18 @@ public class DriftingItemBlockEntity extends BlockEntity implements BlockEntityC
         itemStack = ItemStack.fromTag(tag.getCompound("itemStack"));
     }
 
-    @Override
-    public void tick() {
-         List<PlayerEntity> players = world.getEntities(PlayerEntity.class, new Box(pos), EntityPredicates.EXCEPT_SPECTATOR);
-         if(players.size() > 0)
-         {
-             for (PlayerEntity player : players) {
-                 if(player.inventory.insertStack(itemStack))
-                 {
-                     player.world.playSound(null, player.x, player.y, player.z,
-                             SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F,
-                             ((player.getRand().nextFloat() - player.getRand().nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                     world.setBlockState(pos, Blocks.WATER.getDefaultState());
-                     break;
-                 }
-             }
-         }
+    public void onEntityCollided(Entity entity)
+    {
+        if(entity instanceof PlayerEntity)
+        {
+            PlayerEntity player = (PlayerEntity)entity;
+            if(player.inventory.insertStack(itemStack))
+            {
+                player.world.playSound(null, player.x, player.y, player.z,
+                        SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F,
+                        ((player.getRand().nextFloat() - player.getRand().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                world.setBlockState(pos, Blocks.WATER.getDefaultState());
+            }
+        }
     }
 }

@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "seasources:item/kelp_stipe"
-  }
-}

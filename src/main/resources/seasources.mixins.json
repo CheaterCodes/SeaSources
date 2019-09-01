@@ -3,7 +3,8 @@
   "package": "net.cheatercodes.seasources.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "OverworldDimensionMixin"
+    "OverworldDimensionMixin",
+    "BaseFluidMixin"
   ],
   "client": [
   ],

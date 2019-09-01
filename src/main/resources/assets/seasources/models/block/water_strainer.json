@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "seasources:block/water_strainer_top",
+    "side": "seasources:block/water_strainer_side",
+    "bottom": "seasources:block/water_strainer_bottom"
+  }
+}

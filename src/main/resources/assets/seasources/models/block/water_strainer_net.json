@@ -1,4 +1,5 @@
 {
+	"parent": "block/block",
 	"textures": {
 		"0": "seasources:block/water_strainer_net",
 		"particle": "seasources:block/water_strainer_net"

@@ -11,6 +11,7 @@ import net.cheatercodes.seasources.world.LevelGeneratorTypeCreator;
 import net.cheatercodes.seasources.world.SeablockBiome;
 import net.cheatercodes.seasources.world.StartingRaftFeature;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.impl.loot.LootEntryTypeRegistryImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PillarBlock;
@@ -22,6 +23,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.level.LevelGeneratorType;
+import net.minecraft.world.loot.entry.LootEntry;
 
 
 public class SeaSources implements ModInitializer {
@@ -40,6 +42,8 @@ public class SeaSources implements ModInitializer {
 	public static BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY;
 	public static BlockEntityType<WoodenHopperBlockEntity> WOODEN_HOPPER_BLOCK_ENTITY;
 	public static BlockEntityType<WaterStrainerBlockEntity> WATER_STRAINER_BLOCK_ENTITY;
+
+	public static Item NET = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
 	public static LevelGeneratorType SEABLOCK_LEVEL_GENERATOR_TYPE;
 
@@ -72,9 +76,14 @@ public class SeaSources implements ModInitializer {
 		WOODEN_HOPPER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "wooden_hopper"), BlockEntityType.Builder.create(WoodenHopperBlockEntity::new, WOODEN_HOPPER).build(null));
 		WATER_STRAINER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "water_strainer"), BlockEntityType.Builder.create(WaterStrainerBlockEntity::new, WATER_STRAINER).build(null));
 
+		//Items
+        Registry.register(Registry.ITEM, new Identifier(ModId, "net"), NET);
+
 		//Recipes
 		DryingRecipe.TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(ModId, "drying"), new DryingRecipe.Type());
 		DryingRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(ModId, "drying"), new DryingRecipe.Serializer());
+
+		//Loot Tables
 
 		//World Gen
 		SEABLOCK_LEVEL_GENERATOR_TYPE = LevelGeneratorTypeCreator.create("seablock");

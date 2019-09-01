@@ -1,9 +1,7 @@
 package net.cheatercodes.seasources.blockentities;
 
 import net.cheatercodes.seasources.SeaSources;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.container.Container;
 import net.minecraft.container.GenericContainer;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,10 +11,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DefaultedList;
+import net.minecraft.util.Tickable;
 
 import java.util.Iterator;
 
-public class WaterStrainerBlockEntity extends LootableContainerBlockEntity {
+public class WaterStrainerBlockEntity extends LootableContainerBlockEntity implements Tickable {
 
     private DefaultedList<ItemStack> inventory;
 
@@ -81,5 +80,11 @@ public class WaterStrainerBlockEntity extends LootableContainerBlockEntity {
         } while(itemStack_1.isEmpty());
 
         return false;
+    }
+
+
+    @Override
+    public void tick() {
+
     }
 }

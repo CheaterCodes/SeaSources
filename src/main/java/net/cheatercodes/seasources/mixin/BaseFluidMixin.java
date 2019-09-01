@@ -1,7 +1,5 @@
 package net.cheatercodes.seasources.mixin;
-
-import net.cheatercodes.seasources.SeaSources;
-import net.cheatercodes.seasources.blocks.WaterStrainerNet;
+import net.cheatercodes.seasources.blocks.WaterPermeable;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.BaseFluid;
 import net.minecraft.fluid.Fluid;
@@ -18,8 +16,11 @@ public abstract class BaseFluidMixin extends Fluid {
     public boolean setBlockStateProxy(World world, BlockPos blockPos, BlockState blockState, int flags)
     {
         BlockState oldState = world.getBlockState(blockPos);
-        if(oldState.getBlock() == SeaSources.WATER_STRAINER_NET) {
-            return world.setBlockState(blockPos, oldState.with(WaterStrainerNet.WATER_LEVEL, blockState.getFluidState().getLevel()), flags);
+        if(oldState.getBlock() instanceof WaterPermeable) {
+            if(blockState.getFluidState().isStill())
+                return world.setBlockState(blockPos, oldState.with(WaterPermeable.WATERLOGGED, true), flags);
+            else
+                return world.setBlockState(blockPos, oldState.with(WaterPermeable.WATER_LEVEL, blockState.getFluidState().getLevel()), flags);
         }
         return world.setBlockState(blockPos, blockState, flags);
     }

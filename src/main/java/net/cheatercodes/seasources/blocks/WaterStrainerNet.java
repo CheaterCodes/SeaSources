@@ -43,7 +43,6 @@ public class WaterStrainerNet extends WaterPermeable {
         super(Block.Settings.copy(SeaSources.WATER_STRAINER));
     }
 
-
     @Override
     public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
         return collisionShape;

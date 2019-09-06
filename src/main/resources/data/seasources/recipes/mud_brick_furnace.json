@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "seasources:mud_brick"
+    }
+  },
+  "result": {
+    "item": "seasources:brick_furnace"
+  }
+}

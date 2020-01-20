@@ -14,6 +14,7 @@ import net.minecraft.block.PillarBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -24,26 +25,15 @@ import org.apache.commons.lang3.ObjectUtils;
 
 public class SeaSources implements ModInitializer {
 
-    public static final String ModId = "seasources";
-
     public static final Block DRIFTING_ITEM = new DriftingItemBlock();
 	public static final PillarBlock MAKESHIFT_PLANKS = new PillarBlock(Block.Settings.copy(Blocks.OAK_PLANKS));
 	public static final PillarSlab MAKESHIFT_SLAB = new PillarSlab(Block.Settings.copy(Blocks.OAK_PLANKS));
 	public static final DryingRackBlock DRYING_RACK = new DryingRackBlock(Block.Settings.copy(Blocks.OAK_PLANKS));
-	public static final WoodenHopperBlock WOODEN_HOPPER = new WoodenHopperBlock(Block.Settings.copy(Blocks.OAK_PLANKS));
-	public static final WaterStrainerBlock WATER_STRAINER = new WaterStrainerBlock(Block.Settings.copy(Blocks.BARREL));
-	public static final WaterStrainerNet WATER_STRAINER_NET = new WaterStrainerNet();
-	public static final BrickFurnaceBlock BRICK_FURNACE = new BrickFurnaceBlock(Block.Settings.copy(Blocks.BRICKS));
+	public static final PillarBlock MAKESHIFT_LOG = new PillarBlock(Block.Settings.copy(Blocks.OAK_PLANKS));
 
     public static BlockEntityType<DriftingItemBlockEntity> DRIFTING_ITEM_BLOCK_ENTITY;
 	public static BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY;
-	public static BlockEntityType<WoodenHopperBlockEntity> WOODEN_HOPPER_BLOCK_ENTITY;
-	public static BlockEntityType<WaterStrainerBlockEntity> WATER_STRAINER_BLOCK_ENTITY;
-	public static BlockEntityType<BrickFurnaceBlockEntity> BRICK_FURNACE_BLOCK_ENTITY;
 
-	public static Item NET = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-	public static Item MUD_BALL = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-	public static Item MUD_BRICK = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
 	public static LevelGeneratorType SEABLOCK_LEVEL_GENERATOR_TYPE;
 
@@ -54,39 +44,27 @@ public class SeaSources implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		//Blocks
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "drifting_item"), DRIFTING_ITEM);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "makeshift_planks"), MAKESHIFT_PLANKS);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "makeshift_slab"), MAKESHIFT_SLAB);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "drying_rack"), DRYING_RACK);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "wooden_hopper"), WOODEN_HOPPER);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "water_strainer"), WATER_STRAINER);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "water_strainer_net"), WATER_STRAINER_NET);
-		Registry.register(Registry.BLOCK, new Identifier(ModId, "brick_furnace"), BRICK_FURNACE);
+		Registry.register(Registry.BLOCK, new Identifier("seasources", "drifting_item"), DRIFTING_ITEM);
+		Registry.register(Registry.BLOCK, new Identifier("seasources", "makeshift_planks"), MAKESHIFT_PLANKS);
+		Registry.register(Registry.BLOCK, new Identifier("seasources", "makeshift_slab"), MAKESHIFT_SLAB);
+		Registry.register(Registry.BLOCK, new Identifier("seasources", "drying_rack"), DRYING_RACK);
+		Registry.register(Registry.BLOCK, new Identifier("seasources", "makeshift_log"), MAKESHIFT_LOG);
 
 		//BlockItems
-		Registry.register(Registry.ITEM, new Identifier(ModId, "makeshift_planks"), new BlockItem(MAKESHIFT_PLANKS, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
-		Registry.register(Registry.ITEM, new Identifier(ModId, "makeshift_slab"), new BlockItem(MAKESHIFT_SLAB, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
-		Registry.register(Registry.ITEM, new Identifier(ModId,"drying_rack"), new BlockItem(DRYING_RACK, new Item.Settings().group(ItemGroup.DECORATIONS)));
-		Registry.register(Registry.ITEM, new Identifier(ModId, "wooden_hopper"), new BlockItem(WOODEN_HOPPER, new Item.Settings().group(ItemGroup.REDSTONE)));
-		Registry.register(Registry.ITEM, new Identifier(ModId, "water_strainer"), new BlockItem(WATER_STRAINER, new Item.Settings().group(ItemGroup.DECORATIONS)));
-		Registry.register(Registry.ITEM, new Identifier(ModId, "water_strainer_net"), new BlockItem(WATER_STRAINER_NET, new Item.Settings().group(ItemGroup.DECORATIONS)));
-		Registry.register(Registry.ITEM, new Identifier(ModId, "brick_furnace"), new BlockItem(BRICK_FURNACE, new Item.Settings().group(ItemGroup.DECORATIONS)));
+		Registry.register(Registry.ITEM, new Identifier("seasources", "makeshift_planks"), new BlockItem(MAKESHIFT_PLANKS, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+		Registry.register(Registry.ITEM, new Identifier("seasources", "makeshift_slab"), new BlockItem(MAKESHIFT_SLAB, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+		Registry.register(Registry.ITEM, new Identifier("seasources","drying_rack"), new BlockItem(DRYING_RACK, new Item.Settings().group(ItemGroup.DECORATIONS)));
+		Registry.register(Registry.ITEM, new Identifier("seasources", "makeshift_log"), new BlockItem(MAKESHIFT_LOG, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
 
 		//BlockEntities
-		DRIFTING_ITEM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "drifting_item"), BlockEntityType.Builder.create(DriftingItemBlockEntity::new, DRIFTING_ITEM).build(null));
-		DRYING_RACK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "drying_rack"), BlockEntityType.Builder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
-		WOODEN_HOPPER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "wooden_hopper"), BlockEntityType.Builder.create(WoodenHopperBlockEntity::new, WOODEN_HOPPER).build(null));
-		WATER_STRAINER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "water_strainer"), BlockEntityType.Builder.create(WaterStrainerBlockEntity::new, WATER_STRAINER).build(null));
-		BRICK_FURNACE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier(ModId, "brick_furnace"), BlockEntityType.Builder.create(BrickFurnaceBlockEntity::new, BRICK_FURNACE).build(null));
+		DRIFTING_ITEM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier("seasources", "drifting_item"), BlockEntityType.Builder.create(DriftingItemBlockEntity::new, DRIFTING_ITEM).build(null));
+		DRYING_RACK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY, new Identifier("seasources", "drying_rack"), BlockEntityType.Builder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
 
 		//Items
-        Registry.register(Registry.ITEM, new Identifier(ModId, "net"), NET);
-		Registry.register(Registry.ITEM, new Identifier(ModId, "mud_ball"), MUD_BALL);
-		Registry.register(Registry.ITEM, new Identifier(ModId, "mud_brick"), MUD_BRICK);
 
 		//Recipes
-		DryingRecipe.TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(ModId, "drying"), new DryingRecipe.Type());
-		DryingRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(ModId, "drying"), new DryingRecipe.Serializer());
+		DryingRecipe.TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("seasources", "drying"), new DryingRecipe.Type());
+		DryingRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier("seasources", "drying"), new DryingRecipe.Serializer());
 
 		//Loot Tables
 
@@ -94,10 +72,10 @@ public class SeaSources implements ModInitializer {
 		SEABLOCK_LEVEL_GENERATOR_TYPE = LevelGeneratorTypeCreator.create("seablock");
 
 		//Features
-		STARTING_RAFT_FEATURE = Registry.register(Registry.FEATURE, new Identifier(ModId, "starting_raft"), new StartingRaftFeature(DefaultFeatureConfig::deserialize));
-		DRIFTING_ITEMS_FEATURE = Registry.register(Registry.FEATURE, new Identifier(ModId, "drifting_items"), new DriftingItemsFeature(DefaultFeatureConfig::deserialize));
+		STARTING_RAFT_FEATURE = Registry.register(Registry.FEATURE, new Identifier("seasources", "starting_raft"), new StartingRaftFeature(DefaultFeatureConfig::deserialize));
+		DRIFTING_ITEMS_FEATURE = Registry.register(Registry.FEATURE, new Identifier("seasources", "drifting_items"), new DriftingItemsFeature(DefaultFeatureConfig::deserialize));
 
 		//Biomes
-		SEABLOCK_BIOME = Registry.register(Registry.BIOME, new Identifier(ModId, "seablock"), new SeablockBiome());
+		SEABLOCK_BIOME = Registry.register(Registry.BIOME, new Identifier("seasources", "seablock"), new SeablockBiome());
 	}
 }

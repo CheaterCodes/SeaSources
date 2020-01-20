@@ -1,8 +1,0 @@
-{
-    "parent": "block/orientable",
-    "textures": {
-        "top": "seasources:block/brick_furnace_top",
-        "front": "seasources:block/brick_furnace_front_on",
-        "side": "seasources:block/brick_furnace_side"
-    }
-}

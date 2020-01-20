@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "seasources:block/makeshift_log" },
+    "axis=z": { "model": "seasources:block/makeshift_log", "x": 90 },
+    "axis=x": { "model": "seasources:block/makeshift_log", "x": 90, "y": 90 }
+  }
+}

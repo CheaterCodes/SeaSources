@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class OverworldDimensionMixin extends Dimension {
 
     public OverworldDimensionMixin(World world_1, DimensionType dimensionType_1) {
-        super(world_1, dimensionType_1);
+        super(world_1, dimensionType_1, 0);
     }
 
     @Inject(method = "createChunkGenerator", at = @At("HEAD"), cancellable = true)

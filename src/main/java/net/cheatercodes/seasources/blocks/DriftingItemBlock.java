@@ -29,33 +29,33 @@ public class DriftingItemBlock extends Block implements FluidDrainable, BlockEnt
     }
 
     @Override
-    public void onBlockRemoved(BlockState blockState_1, World world_1, BlockPos blockPos_1, BlockState blockState_2, boolean boolean_1) {
-        BlockEntity blockEntity_1 = world_1.getBlockEntity(blockPos_1);
-        if (blockEntity_1 instanceof DriftingItemBlockEntity) {
-            ItemScatterer.spawn(world_1,blockPos_1, DefaultedList.ofSize(1, ((DriftingItemBlockEntity)blockEntity_1).itemStack));
+    public void onBlockRemoved(BlockState blockState, World world, BlockPos blockPos, BlockState newState, boolean moved) {
+        BlockEntity blockEntity = world.getBlockEntity(blockPos);
+        if (blockEntity instanceof DriftingItemBlockEntity) {
+            ItemScatterer.spawn(world,blockPos, DefaultedList.ofSize(1, ((DriftingItemBlockEntity)blockEntity).itemStack));
         }
 
-        super.onBlockRemoved(blockState_1, world_1, blockPos_1, blockState_2, boolean_1);
+        super.onBlockRemoved(blockState, world, blockPos, newState, moved);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext entityContext) {
         return VoxelShapes.empty();
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState blockState_1) {
+    public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.INVISIBLE;
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState blockState_1, Direction direction_1, BlockState blockState_2, IWorld iWorld_1, BlockPos blockPos_1, BlockPos blockPos_2) {
-        BlockState blockState_3 = super.getStateForNeighborUpdate(blockState_1, direction_1, blockState_2, iWorld_1, blockPos_1, blockPos_2);
-        if (!blockState_3.isAir()) {
-            iWorld_1.getFluidTickScheduler().schedule(blockPos_1, Fluids.WATER, Fluids.WATER.getTickRate(iWorld_1));
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos blockPos, BlockPos neighborPos) {
+        BlockState newState = super.getStateForNeighborUpdate(state, facing, neighborState, world, blockPos, neighborPos);
+        if (!newState.isAir()) {
+            world.getFluidTickScheduler().schedule(blockPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return blockState_3;
+        return newState;
     }
 
     @Override
@@ -69,11 +69,11 @@ public class DriftingItemBlock extends Block implements FluidDrainable, BlockEnt
     }
 
     @Override
-    public void onEntityCollision(BlockState blockState_1, World world_1, BlockPos blockPos_1, Entity entity_1) {
-        BlockEntity blockEntity = world_1.getBlockEntity(blockPos_1);
+    public void onEntityCollision(BlockState blockState, World world, BlockPos blockPos, Entity entity) {
+        BlockEntity blockEntity = world.getBlockEntity(blockPos);
         if(blockEntity instanceof  DriftingItemBlockEntity)
         {
-            ((DriftingItemBlockEntity)blockEntity).onEntityCollided(entity_1);
+            ((DriftingItemBlockEntity)blockEntity).onEntityCollided(entity);
         }
     }
 

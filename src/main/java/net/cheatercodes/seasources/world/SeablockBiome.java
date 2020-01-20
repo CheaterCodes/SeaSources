@@ -19,7 +19,7 @@ public class SeablockBiome extends Biome {
                 .precipitation(Precipitation.RAIN).category(Category.OCEAN).depth(-1.8f).scale(0.1f)
                 .temperature(0.5f).downfall(0.5f).waterColor(0x88CAE2).waterFogColor(0x588391).parent(null));
 
-        this.addFeature(GenerationStep.Feature.TOP_LAYER_MODIFICATION, configureFeature(SeaSources.STARTING_RAFT_FEATURE, FeatureConfig.DEFAULT, Decorator.NOPE, DecoratorConfig.DEFAULT));
-        this.addFeature(GenerationStep.Feature.TOP_LAYER_MODIFICATION, configureFeature(SeaSources.DRIFTING_ITEMS_FEATURE, FeatureConfig.DEFAULT, Decorator.NOPE, DecoratorConfig.DEFAULT));
+        this.addFeature(GenerationStep.Feature.TOP_LAYER_MODIFICATION, SeaSources.STARTING_RAFT_FEATURE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(Decorator.NOPE.configure(DecoratorConfig.DEFAULT)));
+        this.addFeature(GenerationStep.Feature.TOP_LAYER_MODIFICATION, SeaSources.DRIFTING_ITEMS_FEATURE.configure(FeatureConfig.DEFAULT).createDecoratedFeature(Decorator.NOPE.configure(DecoratorConfig.DEFAULT)));
     }
 }

@@ -1,8 +1,0 @@
-{
-  "type": "seasources:drying",
-  "ingredient": {
-    "item": "seasources:mud_ball"
-  },
-  "result": "seasources:mud_brick",
-  "time": 400
-}

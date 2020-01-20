@@ -30,7 +30,7 @@ public class DryingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inv, World var2) {
-        if(input.method_8093(inv.getInvStack(0)))
+        if(input.test(inv.getInvStack(0)))
             return true;
         else
             return false;

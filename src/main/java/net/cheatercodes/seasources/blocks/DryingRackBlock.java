@@ -1,26 +1,21 @@
 package net.cheatercodes.seasources.blocks;
 
 import net.cheatercodes.seasources.DryingRecipe;
-import net.cheatercodes.seasources.blockentities.DriftingItemBlockEntity;
 import net.cheatercodes.seasources.blockentities.DryingRackBlockEntity;
-import net.cheatercodes.seasources.render.DryingRackBlockEntityRenderer;
-import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.state.StateFactory;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -62,38 +57,43 @@ public class DryingRackBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBlockRemoved(BlockState blockState_1, World world_1, BlockPos blockPos_1, BlockState blockState_2, boolean boolean_1) {
-        BlockEntity blockEntity_1 = world_1.getBlockEntity(blockPos_1);
-        if (blockEntity_1 instanceof DryingRackBlockEntity) {
-            ItemScatterer.spawn(world_1,blockPos_1, DefaultedList.ofSize(1, ((DryingRackBlockEntity)blockEntity_1).getItem()));
+    public void onBlockRemoved(BlockState blockState, World world, BlockPos blockPos, BlockState newState, boolean moved) {
+        BlockEntity blockEntity = world.getBlockEntity(blockPos);
+        if (blockEntity instanceof DryingRackBlockEntity) {
+            ItemScatterer.spawn(world,blockPos, DefaultedList.ofSize(1, ((DryingRackBlockEntity)blockEntity).getItem()));
         }
 
-        super.onBlockRemoved(blockState_1, world_1, blockPos_1, blockState_2, boolean_1);
+        super.onBlockRemoved(blockState, world, blockPos, newState, moved);
     }
 
-    public BlockState rotate(BlockState blockState_1, BlockRotation blockRotation_1) {
-        return (BlockState)blockState_1.with(FACING, blockRotation_1.rotate((Direction)blockState_1.get(FACING)));
+    @Override
+    public BlockState rotate(BlockState blockState, BlockRotation blockRotation) {
+        return blockState.with(FACING, blockRotation.rotate(blockState.get(FACING)));
     }
 
-    public BlockState mirror(BlockState blockState_1, BlockMirror blockMirror_1) {
-        return blockState_1.rotate(blockMirror_1.getRotation((Direction)blockState_1.get(FACING)));
+    @Override
+    public BlockState mirror(BlockState blockState, BlockMirror blockMirror) {
+        return blockState.rotate(blockMirror.getRotation(blockState.get(FACING)));
     }
 
-    protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
-        stateFactory$Builder_1.add(FACING);
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
+    @Override
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
         return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerFacing().getOpposite());
     }
 
-    public boolean canPlaceAtSide(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, BlockPlacementEnvironment blockPlacementEnvironment_1) {
+    @Override
+    public boolean canPlaceAtSide(BlockState blockState, BlockView blockView, BlockPos blockPos, BlockPlacementEnvironment env) {
         return false;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
-        switch (blockState_1.get(FACING)) {
+    public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
+        switch (blockState.get(FACING)) {
             case NORTH:
             case SOUTH:
                 return NS_SHAPE;
@@ -102,43 +102,45 @@ public class DryingRackBlock extends BlockWithEntity {
                 return WE_SHAPE;
         }
         return VoxelShapes.empty();
-                }
+    }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView var1) {
+    public BlockEntity createBlockEntity(BlockView blockView) {
         return new DryingRackBlockEntity();
     }
 
-    public BlockRenderType getRenderType(BlockState blockState_1) {
+    @Override
+    public BlockRenderType getRenderType(BlockState blockState) {
         return BlockRenderType.MODEL;
     }
 
-    public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-        BlockEntity blockEntity_1 = world_1.getBlockEntity(blockPos_1);
+    @Override
+    public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-        if (blockEntity_1 instanceof DryingRackBlockEntity) {
-            DryingRackBlockEntity dryingRackEntity = (DryingRackBlockEntity)blockEntity_1;
+        if (blockEntity instanceof DryingRackBlockEntity) {
+            DryingRackBlockEntity dryingRackEntity = (DryingRackBlockEntity)blockEntity;
 
             if(dryingRackEntity.getItem().isEmpty()) {
-                ItemStack itemStack_1 = playerEntity_1.getStackInHand(hand_1);
+                ItemStack itemStack_1 = player.getStackInHand(hand);
                 Optional<DryingRecipe> recipe = dryingRackEntity.getRecipeFor(itemStack_1);
                 if (recipe.isPresent()) {
-                    if (!world_1.isClient) {
-                        dryingRackEntity.setItem(playerEntity_1.abilities.creativeMode ? itemStack_1.copy().split(1) : itemStack_1.split(1));
+                    if (!world.isClient) {
+                        dryingRackEntity.setItem(player.abilities.creativeMode ? itemStack_1.copy().split(1) : itemStack_1.split(1));
                     }
 
-                    return true;
+                    return ActionResult.SUCCESS;
                 }
             }
             else {
-                if(!world_1.isClient) {
-                    dryingRackEntity.giveItem((ServerPlayerEntity)playerEntity_1);
+                if(!world.isClient) {
+                    dryingRackEntity.giveItem((ServerPlayerEntity)player);
                 }
-                return true;
+                return ActionResult.SUCCESS;
             }
         }
 
 
-        return false;
+        return ActionResult.PASS;
     }
 }

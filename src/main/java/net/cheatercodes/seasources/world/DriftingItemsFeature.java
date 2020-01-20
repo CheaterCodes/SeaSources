@@ -3,25 +3,21 @@ package net.cheatercodes.seasources.world;
 import com.mojang.datafixers.Dynamic;
 import net.cheatercodes.seasources.SeaSources;
 import net.cheatercodes.seasources.blockentities.DriftingItemBlockEntity;
-import net.cheatercodes.seasources.blocks.DriftingItemBlock;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.PillarBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.loot.LootSupplier;
-import net.minecraft.world.loot.context.LootContext;
-import net.minecraft.world.loot.context.LootContextTypes;
 
 import java.util.List;
 import java.util.Random;
@@ -35,10 +31,10 @@ public class DriftingItemsFeature extends Feature<DefaultFeatureConfig> {
 
     public ItemStack getItem(World world)
     {
-        LootSupplier lootSupplier = world.getServer().getLootManager().getSupplier(new Identifier(SeaSources.ModId, "gameplay/drifting_item"));
+        LootTable lootTable = world.getServer().getLootManager().getSupplier(new Identifier("seasources", "gameplay/drifting_item"));
         LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);
         LootContext context = builder.build(LootContextTypes.EMPTY);
-        List<ItemStack> stacks = lootSupplier.getDrops(context);
+        List<ItemStack> stacks = lootTable.getDrops(context);
         if(stacks.size() == 0)
             return ItemStack.EMPTY;
         else

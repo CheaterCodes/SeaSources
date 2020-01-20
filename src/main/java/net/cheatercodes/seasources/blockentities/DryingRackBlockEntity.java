@@ -60,7 +60,7 @@ public class DryingRackBlockEntity extends BlockEntity implements BlockEntityCli
             player.dropItem(item, false);
         }
         else {
-            player.world.playSound(null, player.x, player.y, player.z, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((player.getRand().nextFloat() - player.getRand().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
         }
 
         item = ItemStack.EMPTY;
@@ -87,7 +87,7 @@ public class DryingRackBlockEntity extends BlockEntity implements BlockEntityCli
 
     @Override
     public void fromClientTag(CompoundTag tag) {
-        CompoundTag itemTag = (CompoundTag) tag.getTag("item");
+        CompoundTag itemTag = tag.getCompound("item");
         item = ItemStack.fromTag(itemTag);
     }
 

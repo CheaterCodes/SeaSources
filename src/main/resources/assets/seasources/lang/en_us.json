@@ -3,14 +3,5 @@
   "block.seasources.drying_rack": "Drying Rack",
   "block.seasources.makeshift_planks": "Makeshift Planks",
   "block.seasources.makeshift_slab": "Makeshift Slabs",
-  "block.seasources.wooden_hopper": "Wooden Hopper",
-  "block.seasources.water_strainer": "Water Strainer",
-  "block.seasources.water_strainer_net": "Water Strainer Net",
-  "block.seasources.brick_furnace": "Brick Furnace",
-  "item.seasources.net": "Net",
-  "item.seasources.mud_ball": "Mud Ball",
-  "item.seasources.mud_brick": "Mud Brick",
-  "container.wooden_hopper": "Wooden Hopper",
-  "container.water_strainer": "Water Strainer",
-  "container.brick_furnace": "Brick Furnace"
+  "block.seasources.makeshift_log": "Makeshift Log"
 }

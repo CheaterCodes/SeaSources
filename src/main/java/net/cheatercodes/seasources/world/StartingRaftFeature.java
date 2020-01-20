@@ -26,20 +26,22 @@ public class StartingRaftFeature extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(IWorld var1, ChunkGenerator<? extends ChunkGeneratorConfig> var2, Random var3, BlockPos var4, DefaultFeatureConfig var5) {
-        ChunkPos chunk = new ChunkPos(var4);
+    public boolean generate(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> chunkGenerator, Random random, BlockPos blockPos, DefaultFeatureConfig defaultFeatureConfig) {
+        ChunkPos chunk = new ChunkPos(blockPos);
+        BlockPos spawnPos = world.getSpawnPos();
+        BlockPos raftPos = new BlockPos(spawnPos.getX(), world.getSeaLevel() - 1, spawnPos.getZ());
 
         BlockState raftMaterial = SeaSources.MAKESHIFT_SLAB.getDefaultState()
                 .with(PillarSlab.AXIS, Direction.Axis.X).with(PillarSlab.TYPE, SlabType.TOP).with(PillarSlab.WATERLOGGED, true);
 
-        if(chunk.x == 0 & chunk.z == 0)
-            var1.setBlockState(new BlockPos(0,var1.getSeaLevel() - 1, 0), raftMaterial, 2);
-        else if(chunk.x == -1 & chunk.z == 0)
-            var1.setBlockState(new BlockPos(-1,var1.getSeaLevel() - 1, 0), raftMaterial, 2);
-        else if(chunk.x == 0 & chunk.z == -1)
-            var1.setBlockState(new BlockPos(0,var1.getSeaLevel() - 1, -1), raftMaterial, 2);
-        else if(chunk.x == -1 & chunk.z == -1)
-            var1.setBlockState(new BlockPos(-1,var1.getSeaLevel() - 1, -1), raftMaterial, 2);
+        if(chunk.equals(new ChunkPos(raftPos)))
+            world.setBlockState(raftPos, raftMaterial, 2);
+        if(chunk.equals(new ChunkPos(raftPos.south())))
+            world.setBlockState(raftPos.south(), raftMaterial, 2);
+        if(chunk.equals(new ChunkPos(raftPos.west())))
+            world.setBlockState(raftPos.west(), raftMaterial, 2);
+        if(chunk.equals(new ChunkPos(raftPos.south().west())))
+            world.setBlockState(raftPos.south().west(), raftMaterial, 2);
 
         return true;
     }
